@@ -206,16 +206,17 @@ static TCP_CLIENT_T* tcp_client_init(void) {
 }
 
 void run_tcp_client_test(void) {
-    printf("Connecting to Wi-Fi...\n");
+    printf("Start run_tcp_client_test\n");
     cyw43_arch_enable_sta_mode();
-    int err = cyw43_arch_wifi_connect_timeout_ms("Buffalo-5G-CF00", "nefucaab7b63a", CYW43_AUTH_WPA2_AES_PSK, 30000);
+    printf("Connecting to Wi-Fi...\n");
+    int err = cyw43_arch_wifi_connect_timeout_ms("Buffalo-2G-CF00", "nefucaab7b63a", CYW43_AUTH_WPA2_AES_PSK, 30000);
     if (err) {
         printf("failed to connect.%d\n",err);
-        return 1;
+        //return 1;
     } else {
         printf("Connected.\n");
     }
-    printf("Start run_tcp_client_test\n");
+    
     
     TCP_CLIENT_T *state = tcp_client_init();
     
@@ -263,17 +264,17 @@ void test1(void){
     for(;;)
     {      
         printf("test1[%d]\n",i);
-        sleep_ms(1000);
+        sleep_ms(100);
         i++;
     } 
     return;
 }
 void test2(void){
     int i = 0;
-     for(;;)
-     {
+    for(;;)
+    {
         printf("test2[%d]\n",i);
-        sleep_ms(1000);
+        sleep_ms(100);
         i++;
     }
     return;
@@ -307,9 +308,15 @@ int main(){
     // printf ("%d\n",id);
     // tsk_run(id);
     // create_tsk(stack_2, sizeof(stack_2), test2,End);
+    //run_tcp_client_test();
     while (1);
     
     return 0;
+
+}
+
+void isr_hardfault(){
+    printf("hardFalut");
 
 }
 

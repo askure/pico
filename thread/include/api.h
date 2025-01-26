@@ -6,4 +6,5 @@ int create_tsk(void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)());
 void init();
 void tsk_run();
 void tsk_exit();
+void tsk_sleep(uint32_t);
 #endif

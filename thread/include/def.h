@@ -7,6 +7,7 @@
 
 extern void isr_pendsv();
 extern void isr_systick(void);
+extern void isr_hardfault();
 extern void distpatch_test();
 extern void *make_context();
 extern void schedule();

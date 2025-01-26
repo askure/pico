@@ -66,6 +66,7 @@ target_link_libraries(tcp_client
 target_include_directories(tcp_client PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
   ${CMAKE_CURRENT_LIST_DIR}/.. # for our common lwipopts or any other standard includes, if required
+  ${CMAKE_CURRENT_LIST_DIR}/thread/include
 )
 
 pico_add_extra_outputs(tcp_client)

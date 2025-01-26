@@ -18,7 +18,7 @@ void * stackaddr;
 int32_t stacksize; 
 void (*fp)();
 void (*end)();
-int wait_count;
+uint32_t wait_time;
 }TCB;
 
 

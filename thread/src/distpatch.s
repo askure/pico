@@ -34,6 +34,7 @@ disp_010:
     cmp r2 ,#0
     bne disp_030
     /*r1だけ破壊しないように*/
+    str r2,[r0]
 disp_020: 
     CPSIE i
     nop
@@ -41,7 +42,7 @@ disp_020:
     ldr r2,[r1]
     cmp r2 , #0
     beq disp_020
-    
+
 disp_030: 
     str r2 ,[r0]
     ldr r3, [r2]

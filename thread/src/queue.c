@@ -1,9 +1,13 @@
 #include "../include/kernerl.h"
 void add_queue(TCB ** queue, TCB *tcb)
-{
+{   
+    if(tcb == NULL){
+        printf("tcb is NULL\n");
+        return;
+    }
     if(*queue == NULL){ 
         *queue = tcb;
-        tcb->pre = tcb;
+        (*queue)->pre = tcb;
     }
     else{
         TCB *end;
@@ -12,13 +16,26 @@ void add_queue(TCB ** queue, TCB *tcb)
         tcb->pre = end;
         (*queue)->pre = tcb;
     }
+    tcb->next = NULL;
+    // printf("[%p] add\n",tcb);
 }
 
 void remove_queue(TCB ** queue, TCB *tcb){
     if(*queue == NULL){
+        printf("queue is NULL\n");
         return;  
     }
-
+    int err = -1;
+    for(TCB *tmp = *queue; tmp != NULL; tmp = tmp->next){
+        if(tmp == tcb){
+            err = 0;
+            break;
+        }
+    } 
+    if(err){
+        printf("tcb is not in queue\n");
+        return;
+    }  
     if(*queue == tcb){
         TCB *top = *queue;
         *queue = top->next;
@@ -37,4 +54,6 @@ void remove_queue(TCB ** queue, TCB *tcb){
             (*queue)->pre = pre;
         }
     }
+    // printf("[%p] remove\n",tcb);
+    // printf("[%p] head\n",*queue);
 }

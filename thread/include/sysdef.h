@@ -1,9 +1,9 @@
 #ifndef SYSDIF_H
 #define SYSDIF_H
 // 割り込み禁止
-#define	DI(intsts)	(intsts=get_primask(), set_primask(1))
+#define	DI(intsts)	__asm__ volatile("CPSID i");
 
-#define	EI(intsts)	(set_primask(intsts))
+#define	EI(intsts)	__asm__ volatile("CPSIE i");
 
 static inline void set_primask( int pm )
 {

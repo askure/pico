@@ -17,7 +17,6 @@ int create_tsk(void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)())
         tcb_tbl[i].fp = fp;
         tcb_tbl[i].end = end;
         tcb_tbl[i].state = DORAMENT;
-        tcb_tbl[i].wait_count = 3;
         tcb_tbl[i].pre = NULL;
         tcb_tbl[i].next = NULL;
 
@@ -33,9 +32,21 @@ void tsk_run(){
         if(tcb_tbl[i].state == DORAMENT){
             tcb_tbl[i].state = READY;
             add_queue(&ready_queue, &tcb_tbl[i]);
-            printf("test[%d]:%p\n",i,&tcb_tbl[i]);
+            printf("ready:%p , tcb:%p\n",ready_queue,&tcb_tbl[i]);
         }
     }
     schedule();
     EI(intsts);
+}
+
+void tsk_sleep(uint32_t ms){
+    int intsts;
+    DI(intsts);
+    if(ms > 0 && cur_task != NULL){
+        remove_queue(&ready_queue,cur_task);
+        cur_task->wait_time = ms;
+        add_queue(&wait_queue,cur_task);    
+    }
+    EI(intsts);
+    schedule();
 }
