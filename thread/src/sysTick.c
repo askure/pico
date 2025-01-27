@@ -2,13 +2,12 @@
 TCB *wait_queue = NULL;
 static int count;
 static int n = 0;
-int test_print(int i){
-    printf("test %d\n",i);
+void test_print(int i){
+    //printf("test %d\n",count);
     if(count > 100){
-        // if(n == 0) n = 1;
-        // else n = 0;
-        cur_task = tcb_tbl[0].context;
-        printf("cur:%p\n",cur_task);
+        if(n == 0) n = 1;
+        else n = 0;
+        cur_task = &tcb_tbl[n];
         count = 0;
     }
     count++;
@@ -24,11 +23,11 @@ int test_print(int i){
     // }
     // count++;
      //schedule();
-    return i+1;
+    return ;
 }
 
 void print(void* i){
-    printf("%p\n",i);
+    printf("print_sp:%p\n",i);
 }
 volatile void b(){
     printf("a");
