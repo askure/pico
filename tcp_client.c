@@ -253,10 +253,10 @@ void run_tcp_client_test(void) {
 
 
  //uint32_t *stack_0[256];
-#define STACK_SIZE 2160
+#define STACK_SIZE 1024
 uint32_t *stack_1[STACK_SIZE/sizeof(uint32_t)];
 uint32_t *stack_2[STACK_SIZE/sizeof(uint32_t)];
-// uint32_t *stack_3[STACK_SIZE/sizeof(uint32_t)];
+uint32_t *stack_3[STACK_SIZE/sizeof(uint32_t)];
 #include <stdint.h>
 
 void test1(void){
@@ -284,7 +284,7 @@ void test3(void){
     for(;;)
     {
         printf("test3[%d]\n",i);
-        //sleep_ms(1000);
+        sleep_ms(1000);
         i++;
     }
     return;
@@ -300,10 +300,14 @@ int main(){
     }
     stdio_init_all();
     sleep_ms(4000);
-    init();
     create_tsk(stack_1, sizeof(stack_1), test1,End);
-    create_tsk(stack_2, sizeof(stack_2), test2,End);
-    tsk_run();
+    // create_tsk(stack_2, sizeof(stack_2), test2,End);
+    cur_task = tcb_tbl[0].context;
+    printf("%p\n",tcb_tbl[0].context);
+    
+    //create_tsk(stack_3, sizeof(stack_3), test3,End);
+    init();
+    //tsk_run();
     // id = create_tsk(stack_2, sizeof(stack_2), test2,End);
     // printf ("%d\n",id);
     // tsk_run(id);
@@ -316,7 +320,7 @@ int main(){
 }
 
 void isr_hardfault(){
-    printf("hardFalut");
+    printf("hardFalut\n");
 
 }
 

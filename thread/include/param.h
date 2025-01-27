@@ -19,14 +19,15 @@ int32_t stacksize;
 void (*fp)();
 void (*end)();
 uint32_t wait_time;
+int priority;
 }TCB;
 
 
 
 extern TCB *cur_task;
 extern TCB *next_task;
-extern TCB *ready_queue;
-extern TCB  tcb_tbl[TCB_NUM];
+extern TCB *ready_queue[2];
+extern TCB tcb_tbl[TCB_NUM];
 extern TCB *wait_queue;
 
 extern void add_queue(TCB ** , TCB *);

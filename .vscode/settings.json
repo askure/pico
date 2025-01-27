@@ -35,28 +35,5 @@
     "raspberry-pi-pico.cmakeAutoConfigure": true,
     "raspberry-pi-pico.useCmakeTools": false,
     "raspberry-pi-pico.cmakePath": "${HOME}/.pico-sdk/cmake/v3.28.6/bin/cmake",
-    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja",
-    "raspberry-pi-pico.python3Path": "${HOME}/.pico-sdk/python/3.12.1/python.exe",
-    "files.associations": {
-        "stdlib.h": "c",
-        "libgen.h": "c",
-        "adc.h": "c",
-        "cmath": "c",
-        "cyw43_bus_pio_spi.pio.h": "c",
-        "cstdio": "c",
-        "def.h": "c",
-        "trykernel.h": "c",
-        "sysdef.h": "c",
-        "cstdint": "c",
-        "stdint.h": "c",
-        "timer.h": "c",
-        "array": "cpp",
-        "string": "cpp",
-        "string_view": "cpp",
-        "kernerl.h": "c",
-        "deque": "c",
-        "unordered_map": "c",
-        "vector": "c",
-        "initializer_list": "c"
-    }
+    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja"
 }

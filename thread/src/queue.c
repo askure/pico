@@ -17,7 +17,7 @@ void add_queue(TCB ** queue, TCB *tcb)
         (*queue)->pre = tcb;
     }
     tcb->next = NULL;
-    // printf("[%p] add\n",tcb);
+    printf("[%p] add\n",tcb);
 }
 
 void remove_queue(TCB ** queue, TCB *tcb){
