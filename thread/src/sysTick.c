@@ -16,3 +16,7 @@ void isr_systick(void){
     schedule();
     return;
 }
+
+void print_sp(void *i){
+    printf("%p\n",i);
+}

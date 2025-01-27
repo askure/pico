@@ -32,7 +32,7 @@ void tsk_run(){
         if(tcb_tbl[i].state == DORAMENT){
             tcb_tbl[i].state = READY;
             add_queue(&ready_queue, &tcb_tbl[i]);
-            printf("ready:%p , tcb:%p\n",ready_queue,&tcb_tbl[i]);
+            printf("ready:%p , tcb:%p\n",ready_queue,tcb_tbl[i].context);
         }
     }
     schedule();
