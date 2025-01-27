@@ -95,9 +95,11 @@ disp_040:
 
     ldr r0 ,=cur_task
     ldr r1,[r0]
+    cmp r1,#0
+    beq disp_050
     ldr r2,[r1]
     mov sp ,r2
-    
+disp_050:   
     mov r0,sp
     mov r4,lr
     push {r4}

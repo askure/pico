@@ -302,7 +302,7 @@ int main(){
     sleep_ms(4000);
     create_tsk(stack_1, sizeof(stack_1), test1,End);
     // create_tsk(stack_2, sizeof(stack_2), test2,End);
-    cur_task = tcb_tbl[0].context;
+    //cur_task = tcb_tbl[0].context;
     printf("%p\n",tcb_tbl[0].context);
     
     //create_tsk(stack_3, sizeof(stack_3), test3,End);

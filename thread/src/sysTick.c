@@ -27,8 +27,8 @@ int test_print(int i){
     return i+1;
 }
 
-void print(int i){
-    printf("%x\n",i);
+void print(void* i){
+    printf("%p\n",i);
 }
 volatile void b(){
     printf("a");
