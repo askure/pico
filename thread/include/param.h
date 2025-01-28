@@ -20,8 +20,17 @@ void (*fp)();
 void (*end)();
 uint32_t wait_time;
 int priority;
+int tsk_id;
 }TCB;
 
+typedef struct{
+    uint32_t r_[8]; // r4-r11（自動で退避しないレジスタ)
+    uint32_t r[4];
+    uint32_t r12; 
+    uint32_t lr;
+    uint32_t pc; // PC
+    uint32_t xPSR; // xpsr
+} StackFrame;
 
 
 extern TCB *cur_task;

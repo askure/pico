@@ -24,7 +24,7 @@ int create_tsk(void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)())
         tcb_tbl[i].priority = 0;
         tcb_tbl[i].pre = NULL;
         tcb_tbl[i].next = NULL;
-
+        tcb_tbl[i].tsk_id = i;
     }
     EI(intsts);
     return i;
@@ -59,17 +59,20 @@ void make_empty_task(TCB * tcb,void * stackaddr, int32_t stacksize, void (*fp)()
     tcb->priority = 1;
     tcb->pre = NULL;
     tcb->next = NULL;
+    tcb->tsk_id = -1;
     EI(intsts);
 }
 
 void tsk_sleep(uint32_t ms){
     int intsts;
+    // printf("tsk_sleep;tskid%d\n",cur_task->tsk_id);
     DI(intsts);
     if(ms > 0 && cur_task != NULL){
         remove_queue(&ready_queue[cur_task->priority],cur_task);
-        cur_task->wait_time = ms;
-        add_queue(&wait_queue,cur_task);    
+        cur_task = NULL;
+        // cur_task->wait_time = ms;
+        // add_queue(&wait_queue,cur_task);    
     }
     EI(intsts);
-    schedule();
+    
 }

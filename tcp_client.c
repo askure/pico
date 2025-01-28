@@ -284,7 +284,7 @@ void test3(void){
     for(;;)
     {
         printf("test3[%d]\n",i);
-        sleep_ms(1000);
+        tsk_sleep(1000);
         i++;
     }
     return;
@@ -302,13 +302,10 @@ int main(){
     sleep_ms(4000);
     create_tsk(stack_1, sizeof(stack_1), test1,End);
     create_tsk(stack_2, sizeof(stack_2), test2,End);
-    //cur_task = tcb_tbl[0].context;
-    printf("%p\n",tcb_tbl[0].context);
-    printf("%p\n",tcb_tbl[1].context);
-    
-    //create_tsk(stack_3, sizeof(stack_3), test3,End);
+    create_tsk(stack_3, sizeof(stack_3), test3,End);
+    tsk_run();
     init();
-    //tsk_run();
+    
     // id = create_tsk(stack_2, sizeof(stack_2), test2,End);
     // printf ("%d\n",id);
     // tsk_run(id);
