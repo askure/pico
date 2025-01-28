@@ -4,9 +4,9 @@
   .cpu cortex-m0plus
   .fpu softvfp
   .thumb_func
-  .globl isr_pendsv
+  .globl a
 
-isr_pendsv:
+a:
     /*CPSID i  
     ldr   r0, =is_dispatch
     movs  r1, #1
@@ -70,7 +70,7 @@ disp_030:
 
 isr_systick:
     /*レジスタ退避*/
-    /*memo:psr,pc,lr,r12,r3,r2,r1,r0は退避済み*/ 
+    /*psr,pc,lr,r12,r3,r2,r1,r0は退避済み*/ 
 
     push    {r4-r7} 
     mov     r0, r8

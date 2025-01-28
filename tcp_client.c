@@ -257,38 +257,110 @@ void run_tcp_client_test(void) {
 uint32_t *stack_1[STACK_SIZE/sizeof(uint32_t)];
 uint32_t *stack_2[STACK_SIZE/sizeof(uint32_t)];
 uint32_t *stack_3[STACK_SIZE/sizeof(uint32_t)];
+uint32_t *stack_4[STACK_SIZE/sizeof(uint32_t)];
+
+Data user_data[TCB_NUM];
 #include <stdint.h>
 
 void test1(void){
     int i = 0;  
+    int count = 0;
+    int data = -1;
     for(;;)
-    {      
-        printf("test1[%d]\n",i);
+    {   
+        printf("test1[%d],data:[%d]\n",i,data);
+        if(count>10 && user_data[cur_task->port].ok){
+            DI();
+            data = user_data[cur_task->port].data;
+            TCB * tcb = &tcb_tbl[cur_task->port];
+            remove_queue(&ready_queue[tcb->priority],tcb);
+            tcb->priority = READY_DEFALUT;
+            add_queue(&ready_queue[tcb->priority],tcb);
+            user_data[0].ok = 0;
+            count = 0;
+            EI();
+        }
+        // if(i % 10 == 0){
+        //     printf("LoadData....\n");
+        //     sleep_ms(100);
+        //     while(!user_data->ok);
+        //     printf("GetData:%d\n",user_data->data);
+        //     user_data->ok = 0;
+        // }
+        
         sleep_ms(100);
         i++;
+        count++;
     } 
     return;
 }
 void test2(void){
     int i = 0;
+    int count = 0;
+    int data = -1;
     for(;;)
-    {
-        printf("test2[%d]\n",i);
+    {      
+        printf("    test2[%d],data:[%d]\n",i,data);
+        if(count>10 && user_data[cur_task->port].ok){
+            DI();
+            data = user_data[cur_task->port].data;
+            TCB * tcb = &tcb_tbl[cur_task->port];
+            remove_queue(&ready_queue[tcb->priority],tcb);
+            tcb->priority = READY_DEFALUT;
+            add_queue(&ready_queue[tcb->priority],tcb);
+            user_data[cur_task->port].ok = 0;
+            count = 0;
+            EI();
+        }
+        // if(i % 12 == 0){
+        //     //while(!user_data.ok);
+        //     DI();
+        //     user_data.ok = 0;
+        //     printf("LoadData....\n");
+        //     sleep_ms(100);
+        //     printf("GetData:%d\n",user_data.data);
+        //     EI();
+        // }
         sleep_ms(100);
         i++;
-    }
-    return;
- }
-void test3(void){
-    int i = 0;
-    for(;;)
-    {
-        printf("test3[%d]\n",i);
-        tsk_sleep(1000);
-        i++;
+        count++;
     }
     return;
 }
+void test3(void){
+    int i = 0;
+    int count = 0;
+    int data = -1;
+    for(;;)
+    {      
+        printf("        test3[%d],data:[%d]\n",i,data);
+        if(count>10 && user_data[cur_task->port].ok){
+            DI();
+            data = user_data[cur_task->port].data;
+            TCB * tcb = &tcb_tbl[cur_task->port];
+            remove_queue(&ready_queue[tcb->priority],tcb);
+            tcb->priority = READY_DEFALUT;
+            add_queue(&ready_queue[tcb->priority],tcb);
+            user_data[cur_task->port].ok = 0;
+            count = 0;
+            EI();
+        }
+        // if(i % 12 == 0){
+        //     //while(!user_data.ok);
+        //     DI();
+        //     user_data.ok = 0;
+        //     printf("LoadData....\n");
+        //     sleep_ms(100);
+        //     printf("GetData:%d\n",user_data.data);
+        //     EI();
+        // }
+        sleep_ms(100);
+        i++;
+        count++;
+    }
+    return;
+}
+
 void End(){
     printf("End\n");
 }
@@ -316,7 +388,26 @@ int main(){
     return 0;
 
 }
-
+void isr_pendsv(){
+    printf("isr_pendsv\n");
+    DI();
+    int i;
+    // for(i=0;i<TCB_NUM; i++){
+    //     if(tcb_tbl[i].state == READY && tcb_tbl[i].port == 0)break;
+    // }
+    // if(i>=TCB_NUM) return;
+    int index = rand() %3;
+    TCB * tcb = &tcb_tbl[index];
+    remove_queue(&ready_queue[tcb->priority],tcb);
+    tcb->priority = 0;
+    add_queue(&ready_queue[tcb->priority],tcb);
+    int j = rand()%10;
+    
+    user_data[index].data = j;
+    user_data[index].ok = 1;
+    EI();
+    printf("data %d,to tsk %d\n",j,index);
+}
 void isr_hardfault(){
     printf("hardFalut\n");
 

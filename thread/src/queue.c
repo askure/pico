@@ -20,12 +20,13 @@ void add_queue(TCB ** queue, TCB *tcb)
     //printf("[%p] add\n",tcb);
 }
 
-void remove_queue(TCB ** queue, TCB *tcb){
+int remove_queue(TCB ** queue, TCB *tcb){
+    int err = -1;
     if(*queue == NULL){
         printf("queue is NULL\n");
-        return;  
+        return err ;  
     }
-    int err = -1;
+    
     for(TCB *tmp = *queue; tmp != NULL; tmp = tmp->next){
         if(tmp == tcb){
             err = 0;
@@ -34,7 +35,7 @@ void remove_queue(TCB ** queue, TCB *tcb){
     } 
     if(err){
         printf("tcb is not in queue\n");
-        return;
+        return err;
     }  
     if(*queue == tcb){
         TCB *top = *queue;

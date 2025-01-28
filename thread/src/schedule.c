@@ -1,7 +1,7 @@
 #include "../include/kernerl.h"
 int is_dispatch=0;
 int count =0;
-TCB *ready_queue[2];
+TCB *ready_queue[READY_NUM];
 TCB *cur_task = NULL;
 TCB *next_task = NULL;
 // void schedule(){

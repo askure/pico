@@ -20,8 +20,14 @@ void (*fp)();
 void (*end)();
 uint32_t wait_time;
 int priority;
+int port;
 int tsk_id;
 }TCB;
+
+typedef struct data{
+    uint32_t data;
+    uint32_t ok;
+}Data;
 
 typedef struct{
     uint32_t r_[8]; // r4-r11（自動で退避しないレジスタ)
@@ -32,12 +38,14 @@ typedef struct{
     uint32_t xPSR; // xpsr
 } StackFrame;
 
-
+#define READY_NUM 10
+#define READY_DEFALUT 5
 extern TCB *cur_task;
 extern TCB *next_task;
-extern TCB *ready_queue[2];
+extern TCB *ready_queue[READY_NUM];
 extern TCB tcb_tbl[TCB_NUM];
 extern TCB *wait_queue;
-
+extern int pending_dispatch;
+extern Data user_data[TCB_NUM];
 extern void add_queue(TCB ** , TCB *);
-extern void remove_queue(TCB ** , TCB *);
+extern int remove_queue(TCB ** , TCB *);
