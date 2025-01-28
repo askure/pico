@@ -256,7 +256,7 @@ void run_tcp_client_test(void) {
 #define STACK_SIZE 2160
 uint32_t *stack_1[STACK_SIZE/sizeof(uint32_t)];
 uint32_t *stack_2[STACK_SIZE/sizeof(uint32_t)];
-// uint32_t *stack_3[STACK_SIZE/sizeof(uint32_t)];
+uint32_t *stack_3[STACK_SIZE/sizeof(uint32_t)];
 #include <stdint.h>
 
 void test1(void){
@@ -264,7 +264,7 @@ void test1(void){
     for(;;)
     {      
         printf("test1[%d]\n",i);
-        sleep_ms(100);
+        tsk_sleep(100);
         i++;
     } 
     return;
@@ -274,7 +274,7 @@ void test2(void){
     for(;;)
     {
         printf("test2[%d]\n",i);
-        sleep_ms(100);
+        tsk_sleep(100);
         i++;
     }
     return;
@@ -284,7 +284,7 @@ void test3(void){
     for(;;)
     {
         printf("test3[%d]\n",i);
-        //sleep_ms(1000);
+        tsk_sleep(1000);
         i++;
     }
     return;
@@ -303,6 +303,7 @@ int main(){
     init();
     create_tsk(stack_1, sizeof(stack_1), test1,End);
     create_tsk(stack_2, sizeof(stack_2), test2,End);
+    create_tsk(stack_3, sizeof(stack_3), test3,End);
     tsk_run();
     // id = create_tsk(stack_2, sizeof(stack_2), test2,End);
     // printf ("%d\n",id);

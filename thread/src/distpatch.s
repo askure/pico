@@ -47,12 +47,12 @@ disp_030:
     str r2 ,[r0]
     ldr r3, [r2]
     mov sp ,r3
-    mov r0,sp
+    /*mov r0,sp
     mov r4,lr
     push {r4}
     bl print_sp
     pop {r4}
-    mov lr ,r4
+    mov lr ,r4*/
     /*レジスタ復帰*/
     pop	{r0-r3}
     mov	r11, r3

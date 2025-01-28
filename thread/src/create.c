@@ -1,5 +1,6 @@
 #include "../include/kernerl.h"
 TCB tcb_tbl[TCB_NUM];
+TCB empty_tcb;
 int create_tsk(void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)())
 {   
     int intsts;
@@ -19,10 +20,22 @@ int create_tsk(void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)())
         tcb_tbl[i].state = DORAMENT;
         tcb_tbl[i].pre = NULL;
         tcb_tbl[i].next = NULL;
+        tcb_tbl[i].pri = 0;
 
     }
     EI(intsts);
     return i;
+}
+void empty(){
+    while(1);
+}
+uint32_t empty_stack[1024/sizeof(uint32_t)];
+void create_empty_tsk(){
+    empty_tcb.context = make_context(empty_stack ,sizeof(empty_stack),empty,NULL);
+    empty_tcb.state = READY;
+    empty_tcb.pre = NULL;
+    empty_tcb.next =  NULL;
+    empty_tcb.pri = 1;
 }
 
 void tsk_run(){
@@ -31,10 +44,12 @@ void tsk_run(){
     for(int i=0 ; i< TCB_NUM; i++){
         if(tcb_tbl[i].state == DORAMENT){
             tcb_tbl[i].state = READY;
-            add_queue(&ready_queue, &tcb_tbl[i]);
+            add_queue(&ready_queue[0], &tcb_tbl[i]);
             printf("ready:%p , tcb:%p\n",ready_queue,tcb_tbl[i].context);
         }
     }
+    create_empty_tsk();
+    add_queue(&ready_queue[1],&empty_tcb);
     schedule();
     EI(intsts);
 }
@@ -43,7 +58,7 @@ void tsk_sleep(uint32_t ms){
     int intsts;
     DI(intsts);
     if(ms > 0 && cur_task != NULL){
-        remove_queue(&ready_queue,cur_task);
+        remove_queue(&ready_queue[cur_task->pri],cur_task);
         cur_task->wait_time = ms;
         add_queue(&wait_queue,cur_task);    
     }
