@@ -62,6 +62,7 @@ void tsk_sleep(uint32_t ms){
         cur_task->wait_time = ms;
         add_queue(&wait_queue,cur_task);    
     }
-    EI(intsts);
     schedule();
+    EI(intsts);
+    
 }

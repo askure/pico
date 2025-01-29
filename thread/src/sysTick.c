@@ -12,13 +12,11 @@ void isr_systick(void){
             add_queue(&ready_queue[tcb->pri],tcb);
             tcb = wait_queue;
         }   
-    }
-    if(count >=100){       
-        remove_queue(&ready_queue[cur_task->pri],cur_task);
-        add_queue(&ready_queue[cur_task->pri],cur_task);
-        count = 0;
-    }
-    count++;
+    }      
+    // remove_queue(&ready_queue[cur_task->pri],cur_task);
+    // add_queue(&ready_queue[cur_task->pri],cur_task);
+    // count = 0;
+    // count++;
     schedule();
     return;
 }

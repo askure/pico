@@ -284,7 +284,7 @@ void test3(void){
     for(;;)
     {
         printf("test3[%d]\n",i);
-        tsk_sleep(1000);
+        tsk_sleep(100);
         i++;
     }
     return;
@@ -302,7 +302,7 @@ int main(){
     sleep_ms(4000);
     init();
     create_tsk(stack_1, sizeof(stack_1), test1,End);
-    create_tsk(stack_2, sizeof(stack_2), test2,End);
+    //  create_tsk(stack_2, sizeof(stack_2), test2,End);
     create_tsk(stack_3, sizeof(stack_3), test3,End);
     tsk_run();
     // id = create_tsk(stack_2, sizeof(stack_2), test2,End);
@@ -317,7 +317,7 @@ int main(){
 }
 
 void isr_hardfault(){
-    printf("hardFalut");
+    printf("hardFalut\n");
 
 }
 
