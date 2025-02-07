@@ -284,7 +284,7 @@ void test3(void){
     for(;;)
     {
         printf("test3[%d]\n",i);
-        tsk_sleep(1000);
+        sleep_ms(500);
         i++;
     }
     return;

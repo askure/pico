@@ -13,7 +13,7 @@ void schedule(void){
     //         add_queue(&ready_queue,tmp)
     //     }
     // }
-    if(count > 100){
+    // if(count > 100){
         int i;
         if(cur_task != NULL){
             remove_queue(&ready_queue[cur_task->priority],cur_task);
@@ -22,12 +22,12 @@ void schedule(void){
         for(i=0;i<2;i++) if(ready_queue[i] != NULL) break;
         TCB * tcb = ready_queue[i];
         cur_task = tcb;
-        printf("tsk:%d\n",cur_task->tsk_id);
+        //printf("tsk:%d\n",cur_task->tsk_id);
         // StackFrame* sfp = (StackFrame*)next_task->context;
         // printf("task->context->lr:%p\n",sfp->lr);
-        count = 0;
-    }
-    count++;
+    //     count = 0;
+    // }
+    // count++;
     // if(count >=100){
     //     TCB *tcb;
     //     for(tcb = wait_queue; tcb != NULL; tcb = tcb->next){

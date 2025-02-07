@@ -44,7 +44,7 @@ void tsk_run(){
     TCB emptytask;
     make_empty_task(&emptytask,stack_empty,sizeof(stack_empty),empty_task,NULL);
     add_queue(&ready_queue[emptytask.priority], &emptytask);
-    schedule();
+    //schedule();
     EI(intsts);
 }
 void make_empty_task(TCB * tcb,void * stackaddr, int32_t stacksize, void (*fp)(),void (*end)()){
